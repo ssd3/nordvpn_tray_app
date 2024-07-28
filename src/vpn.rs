@@ -1,5 +1,6 @@
 use crate::log;
 use std::process::{Command, Output};
+use regex::Regex;
 
 fn command() -> Command {
     Command::new("nordvpn")
@@ -91,6 +92,9 @@ pub fn set_settings(key: String, value: String) -> bool {
     } else if key == "lan discovery" {
         args.push("lan-discovery".into());
         args.push(option.into());
+    } else if key == "virtual location" {
+        args.push("virtual-location".into());
+        args.push(option.into());
     } else {
         args.push(key.replace(" ", ""));
         args.push(option.into());
@@ -120,10 +124,8 @@ fn format_kv(output: Output) -> Vec<(String, String)> {
 
 fn format_list(output: Output) -> Vec<String> {
     let stdout = String::from_utf8_lossy(&output.stdout);
-    stdout
-        .trim_start_matches(X)
-        .replace("_", " ")
-        .split(',')
+    let re = Regex::new(r"[,\n]").unwrap();
+    re.split(&stdout.trim_start_matches(X).replace("_", " "))
         .map(|x| x.trim().into())
         .collect::<Vec<_>>()
 }

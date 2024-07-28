@@ -7,4 +7,5 @@ edition = "2021"
 
 [dependencies]
 ksni = "0.2.1"
-syslog = "^6.0"
+regex = "1.10.5"
+syslog = "7.0.0"
