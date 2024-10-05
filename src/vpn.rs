@@ -95,6 +95,9 @@ pub fn set_settings(key: String, value: String) -> bool {
     } else if key == "virtual location" {
         args.push("virtual-location".into());
         args.push(option.into());
+    else if key == "post-quantum vpn" {
+        args.push("post-quantum".into());
+        args.push(option.into());
     } else {
         args.push(key.replace(" ", ""));
         args.push(option.into());
